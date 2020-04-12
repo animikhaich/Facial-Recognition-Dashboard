@@ -30,7 +30,6 @@
 #
 
 import numpy as np
-import pkg_resources
 from PIL import Image
 
 from mtcnn.exceptions import InvalidImage
@@ -78,8 +77,7 @@ class MTCNN(object):
             steps_threshold = [0.6, 0.7, 0.7]
 
         if weights_file is None:
-            weights_file = pkg_resources.resource_stream(
-                'mtcnn', 'data/mtcnn_weights.npy')
+            weights_file = 'utils/mtcnn/data/mtcnn_weights.npy'
 
         self._min_face_size = min_face_size
         self._steps_threshold = steps_threshold
