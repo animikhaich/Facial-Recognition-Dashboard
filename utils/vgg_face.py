@@ -1,11 +1,10 @@
-from PIL import *
-import os
-import numpy as np
-from keras_vggface.vggface import VGGFace
-from keras_vggface.utils import preprocess_input
 from keras.backend.tensorflow_backend import set_session
-import tensorflow as tf
+from keras_vggface.utils import preprocess_input
+from keras_vggface.vggface import VGGFace
 from scipy.spatial.distance import cosine
+import tensorflow as tf
+import numpy as np
+import os
 
 # Set environment variable to make sure that TF does not eat up all GPU memory
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
