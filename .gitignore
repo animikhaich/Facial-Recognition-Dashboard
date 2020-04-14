@@ -141,7 +141,7 @@ cython_debug/
 
 # static files generated from Django application using `collectstatic`
 media
-static
+
 
 .vscode/*
 !.vscode/settings.json
@@ -155,5 +155,5 @@ static
 *.jpg
 
 # Folders
-./data
+static/data
 .vscode

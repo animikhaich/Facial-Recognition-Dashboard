@@ -16,6 +16,7 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 ROOT_DATA_DIR = 'static/data'
 CROPPED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'cropped_faces')
 RECOGNIZED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'recognized_faces')
+name_face_map = dict()
 mtcnn = MTCNN()
 
 # Flask Config
@@ -24,17 +25,18 @@ app.config['DEBUG'] = True
 
 
 @app.route('/', methods=['GET'])
-def root():
-    return redirect(url_for('home'))
-
-
-@app.route('/home', methods=['POST'])
+@app.route('/home', methods=['GET'])
 def home():
     return render_template('home.html')
 
 
-@app.route('/upload', methods=['POST', 'GET'])
-def upload_and_detect():
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
+
+
+@app.route('/upload_known_faces', methods=['POST', 'GET'])
+def upload_known_faces():
     # Handle Uploaded Files
     if request.method == 'POST':
         # Making sure Folder exists
@@ -77,7 +79,51 @@ def upload_and_detect():
 
     # Display Page
     if request.method == 'GET':
-        return render_template('upload.html')
+        return render_template('upload_known_faces.html')
+
+
+@app.route('/label_faces', methods=['POST', 'GET'])
+def label_faces():
+    global name_face_map
+
+    # Clear the Face Map Dictionary for new Faces
+    name_face_map = dict()
+
+    # Handle Uploaded Files
+    if request.method == 'POST':
+
+        # Detect Faces for each Uploaded Image
+        faces_list = list()
+        for uploaded_file in uploaded_files:
+            image = Image.open(uploaded_file).convert('RGB')
+            image = np.asarray(image)
+
+            # Detect Faces using MTCNN
+            detected_faces = mtcnn.detect_faces(image)
+
+            height, width, _ = image.shape
+            for detected_face in detected_faces:
+                x1, y1, x2, y2 = fix_coordinates(
+                    detected_face['box'], width, height
+                )
+                cropped_face = image[y1:y2, x1:x2]
+                try:
+                    cropped_face = Image.fromarray(cropped_face)
+                except:
+                    continue
+                saved_image_path = os.path.join(
+                    CROPPED_FACES_DIR,
+                    str(face_num) + uploaded_file.filename
+                )
+                cropped_face.save(saved_image_path)
+                faces_list.append('/' + saved_image_path)
+                face_num += 1
+
+    # Display Page
+    if request.method == 'GET':
+        return render_template('label_faces.html')
+
+        return jsonify(faces_list)
 
 
 @app.route('/generate_data')
