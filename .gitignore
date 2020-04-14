@@ -155,5 +155,5 @@ static
 *.jpg
 
 # Folders
-data
+./data
 .vscode
