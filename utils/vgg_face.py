@@ -1,8 +1,10 @@
 from keras.backend.tensorflow_backend import set_session
+from keras.preprocessing.image import load_img
 from keras_vggface.utils import preprocess_input
 from keras_vggface.vggface import VGGFace
 from scipy.spatial.distance import cosine
 import tensorflow as tf
+from PIL import Image
 import numpy as np
 import os
 
@@ -136,9 +138,10 @@ class VGGFaceRecognizer:
             list: Returns the feature vector that is extracted from the given face
         """
         # Resize the face, face is a PIL image
-        face = face.resize(224, 224)
-        face = face.img_to_array(face)
+        face = face.resize((224, 224), Image.ANTIALIAS)
+        face = np.asarray(face).astype(np.float)
         face = np.expand_dims(face, axis=0)
+
         if self.model == 'vgg16':
             face = preprocess_input(face, version=1)
         else:
