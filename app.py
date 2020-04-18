@@ -11,6 +11,7 @@ import shutil
 import sys
 import os
 
+# Configure Environment for GPU
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
@@ -174,4 +175,9 @@ def upload_pictures():
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port='5000', use_reloader=False, threaded=False)
+    app.run(
+        host='localhost',
+        port='5000',
+        use_reloader=False,
+        threaded=False
+    )
