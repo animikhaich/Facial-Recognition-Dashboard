@@ -251,3 +251,14 @@ p {
   margin-bottom: 20px;
 }
 
+#outer-div {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+div {
+  height: 100%;
+  flex-grow: 1;
+}
+

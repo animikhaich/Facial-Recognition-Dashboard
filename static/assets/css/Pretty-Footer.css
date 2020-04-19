@@ -9,6 +9,7 @@ footer {
   margin-top: 80px;
   bottom: 0;
   color: #fff;
+  position: relative;
 }
 
 .footer-navigation h3 {
