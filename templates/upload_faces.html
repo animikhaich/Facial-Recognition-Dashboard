@@ -5,26 +5,20 @@
     <div class="container py-5">
 
     <header class="text-white text-center">
-        <h1 class="display-4">Bootstrap Image Upload</h1>
+        <h1 class="display-4">Upload Images with Faces that you want to recognize later down the road</h1>
         <img src="https://res.cloudinary.com/mhmd/image/upload/v1564991372/image_pxlho1.svg" alt="" width="150" class="mb-4">
     </header>
 
 
-    <div class="row py-4">
-        <div class="col-lg-6 mx-auto">
+    <div class="row py-5">
+        <div class="col-lg-1 col-centered">
 
-            <!-- Upload image input-->
-            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-                <input id="upload" type="file" multiple onchange="readURL(this);" class="form-control border-0">
-                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-                <div class="input-group-append">
-                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-                </div>
+            <div class="text-center">
+                <form action="" method="post" class="input-group-append">
+                    <input type="file" name="faces" id="faces-input" multiple style="display: none;">
+                    <label for="faces-input" class="btn btn-light m-0 rounded-pill px-6"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose Images</small></label>
+                </form>
             </div>
-
-            <!-- Uploaded image area-->
-            <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
-            <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
 
         </div>
     </div>
