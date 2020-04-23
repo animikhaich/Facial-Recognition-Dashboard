@@ -20,12 +20,8 @@ app.config['DEBUG'] = True
 
 
 @app.route('/', methods=['GET'])
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET'])
 def home():
-    if request.method == 'POST':
-        if request.form['next_button'] == "Let's Begin!":
-            return redirect('upload_faces')
-
     return render_template('home.html')
 
 
@@ -34,7 +30,7 @@ def about():
     return render_template('about.html', title="About")
 
 
-@app.route('/upload_faces', methods=['POST', 'GET'])
+@app.route('/upload_faces', methods=['GET', 'POST'])
 def upload_faces():
     # Display Page
     if request.method == 'GET':
@@ -51,11 +47,10 @@ def upload_faces():
         os.makedirs(CROPPED_FACES_DIR)
 
     # Get uploaded files
-    uploaded_files = request.files.getlist("files")
-
+    uploaded_files = request.files.getlist("file")
     face_num = 0
 
-    faces_list = list()
+    faces_list = [uploaded_file.filename for uploaded_file in uploaded_files]
     return jsonify(faces_list)
 
 

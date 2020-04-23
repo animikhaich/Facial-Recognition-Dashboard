@@ -12,7 +12,7 @@
         <li>Faces will be detected and you will be prompted to enter the names of each detected face. You can skip a face if you don't want it to be identified.</li>
         <li>Upload the query images (different form the first ones) where the same group labeled group of faces are present.</li>
     </ol>
-    <form style="text-align: center;vertical-align: middle;" method="POST" action="">
+    <form style="text-align: center;vertical-align: middle;" method="GET" action="{{ url_for('upload_faces') }}">
         <input type="submit" value="Let's Begin!" name="next_button" class="btn btn-danger" style="border:none;width:180px;height:70px;margin-left:14px;background-color:#3abaa1;color:rgb(0, 0, 0);margin-top:12px; text-align:center;">
     </form>
 </div>
