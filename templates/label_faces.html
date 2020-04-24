@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col text-center table-responsive", style="height: 90vh; overflow: auto;">
+
+        <form method="POST" action="">
+
+            <table class="table table-hover small">
+
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for content in table_contents %}
+                    <tr>
+                        <td style="color: white; vertical-align:middle">
+                            {{ content.id }}
+                        </td>
+                        <td style="color: white; vertical-align:middle" scope="row">
+                            <img src={{ content.image }} class="img-thumbnail" alt="Unknown Face">
+                        </td>
+                        <td style="color: white; vertical-align:middle">
+                            <input type="text" class="form-control" id={{ content.id }} name="face-name-{{ content.id }}" placeholder="Name (can be blank)">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3">
+                            <input type="submit" value="Next" name="next_button" class="btn btn-danger" style="border:none;width:180px;height:70px;margin-left:14px;background-color:#3abaa1;color:rgb(0, 0, 0);margin-top:12px; text-align:center;">
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </form>
+
+    </div>
+</div>
+    {% endblock content %}

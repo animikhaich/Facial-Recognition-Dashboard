@@ -17,6 +17,29 @@ RECOGNIZED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'recognized_faces')
 # Flask Config
 app = Flask(__name__)
 app.config['DEBUG'] = True
+"/static/data/cropped_faces/15dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/25dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/35dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
+
+dummy_content = [
+    {
+        'id': 0,
+        'image': "/static/data/cropped_faces/05dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 1,
+        'image': "/static/data/cropped_faces/25dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 2,
+        'image': "/static/data/cropped_faces/35dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 3,
+        'image': "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    }
+]
 
 
 @app.route('/', methods=['GET'])
@@ -58,7 +81,7 @@ def upload_faces():
 def label_faces():
     # Display Page
     if request.method == 'GET':
-        return render_template('label_faces.html', title="Label")
+        return render_template('label_faces.html', title="Label", table_contents=dummy_content)
 
     # Get Form Data
     name_face_map = request.json
