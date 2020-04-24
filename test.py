@@ -22,7 +22,7 @@ app.config['DEBUG'] = True
 "/static/data/cropped_faces/35dae1c1312045f46dcf54df9c9bb00f1.jpg",
 "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
 
-dummy_content = [
+content = [
     {
         'id': 0,
         'image': "/static/data/cropped_faces/05dae1c1312045f46dcf54df9c9bb00f1.jpg"
@@ -37,6 +37,10 @@ dummy_content = [
     },
     {
         'id': 3,
+        'image': "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 4,
         'image': "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
     }
 ]
@@ -81,21 +85,26 @@ def upload_faces():
 def label_faces():
     # Display Page
     if request.method == 'GET':
-        return render_template('label_faces.html', title="Label", table_contents=dummy_content)
-
-    # Get Form Data
-    name_face_map = request.json
+        return render_template('label_faces.html', title="Label", table_contents=content)
 
     face_list = list()
     label_list = list()
-    for image_path, label in name_face_map.items():
-        image = Image.open(image_path[1:]).convert('RGB')
+    for element in content:
+        face_id = element.get('id')
+        image_path = element.get('image')
+        label = request.form.get(f"face-name-{face_id}")
+        print(face_id, image_path, label)
+
+        if not label:
+            continue
+
+        # image = Image.open(image_path[1:]).convert('RGB')
 
         # Create the List to pass to FR Module
-        face_list.append(image)
+        face_list.append(image_path)
         label_list.append(label)
 
-    return redirect('upload_pictures')
+    return jsonify([face_list, label_list])
 
 
 @app.route('/upload_pictures', methods=['POST', 'GET'])
@@ -116,10 +125,11 @@ def upload_pictures():
         os.makedirs(RECOGNIZED_FACES_DIR)
 
     # Get uploaded files
-    uploaded_files = request.files.getlist("files")
+    uploaded_files = request.files.getlist("file")
 
     # Detect Faces for each Uploaded Image
-    recognized_image_list = list()
+    recognized_image_list = [
+        uploaded_file.filename for uploaded_file in uploaded_files]
 
     return jsonify(recognized_image_list)
 
