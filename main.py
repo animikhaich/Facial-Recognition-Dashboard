@@ -1,6 +1,6 @@
 from flask import Flask, redirect, jsonify, request, send_file, url_for, render_template
 from keras.backend.tensorflow_backend import set_session
-from .mtcnn.mtcnn import MTCNN
+from .mtcnn import MTCNN
 from utils.utils import *
 from utils.vgg_face import VGGFaceRecognizer
 from PIL import Image, ImageDraw, ImageFont
