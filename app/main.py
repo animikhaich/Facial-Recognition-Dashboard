@@ -31,7 +31,7 @@ face_recognizer = VGGFaceRecognizer(model='senet50')
 
 # Flask Config
 app = Flask(__name__)
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 
 # In App Variables
 content = list()
