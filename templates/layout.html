@@ -14,6 +14,7 @@
             Dashboard
         {% endif %}
     </title>
+    <link rel="icon" href="/static/assets/img/facial-recognition.png">
     <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">
@@ -37,7 +38,7 @@
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item" role="presentation"><a class="nav-link active" href="{{ url_for('home') }}">Home</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('about') }}">Contact</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
                 </ul>
         </div>
         </div>
@@ -53,7 +54,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-4 footer-navigation">
                 <h3 class="companylogo"><a class="companylogo" href="https://www.linkedin.com/in/animikh-aich/">Animikh&nbsp;<span>Aich</span></a></h3>
-                <p class="links"><a href="{{ url_for('home') }}">Home</a><strong> ·&nbsp;&nbsp;</strong><a href="{{ url_for('about') }}">About</a><strong> ·&nbsp;&nbsp;</strong><a href="{{ url_for('about') }}">Contact</a></p>
+                <p class="links"><a href="{{ url_for('home') }}">Home</a><strong> ·&nbsp;&nbsp;</strong><a href="{{ url_for('about') }}">About</a><strong> ·&nbsp;&nbsp;</strong><a href="{{ url_for('contact') }}">Contact</a></p>
             </div>
             <div class="col-sm-6 col-md-4 footer-contacts middle-footer">
                 <div><span class="fa fa-map-marker footer-contacts-icon"> </span>

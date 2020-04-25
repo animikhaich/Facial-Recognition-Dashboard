@@ -37,15 +37,23 @@ app.config['DEBUG'] = True
 content = list()
 
 
-@app.route('/', methods=['GET'])
-@app.route('/home', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    if request.method == 'GET':
+        return render_template('home.html')
+
+    return redirect(url_for('upload_faces'))
 
 
 @app.route('/about', methods=['GET'])
 def about():
-    return render_template('about.html')
+    return render_template('about.html', title="About")
+
+
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html', title="Contact")
 
 
 @app.route('/upload_faces', methods=['POST', 'GET'])
@@ -224,6 +232,6 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port='5000',
-        use_reloader=True,
+        use_reloader=False,
         threaded=True
     )

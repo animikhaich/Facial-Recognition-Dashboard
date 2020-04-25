@@ -1,26 +1,27 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div><div class="bootstrap_img_upload">
+<div class="bootstrap_img_upload">
     <div class="container py-5">
-
-    <header class="text-white text-center">
-        <h1 class="display-4">Upload Images containing the face(s) that you have already labeled</h1>
-        <img src="https://res.cloudinary.com/mhmd/image/upload/v1564991372/image_pxlho1.svg" alt="" width="150" class="mb-4">
-    </header>
-
-
-    <div class="row py-5">
-        <div class="col-lg-2">
-
-            <form action="" method="POST" class="input-group-append", enctype="multipart/form-data">
-                <input type="file" name="file" id="pictures-input" multiple style="display: none;">
-                <label for="pictures-input" class="btn btn-light m-0 rounded-pill px-6"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose Images</small></label>
-                <input type="submit">
-            </form>
-
-        </div>
+        
+        <header class="text-white text-center">
+            <h1 class="display-4">Upload Images containing the face(s) that you have already labeled</h1>
+            <p>Processing time is dependent on the number of uploaded images, please be patient.</p>
+            <img src="/static/assets/img/image_upload.png" alt="" width="300" class="mb-4">
+        </header>
+        
+        <form action="" method="POST", class="align-content-center" enctype="multipart/form-data">
+                <br>
+                <div class="form-group custom-file d-flex justify-content-center" style="margin:auto; text-align: center; max-width: 500px; width: 100%;">
+                    <input type="file" name="file" id="pictures-input" multiple class="custom-file-input"">
+                    <label class="custom-file-label" for="file">Select images...</label>
+                </div>
+                <br>
+            <div class="text-center">
+                <input type="submit" value="Submit" name="next_button" class="btn btn-danger" style="border:none;width:100px;height:50px;background-color:#3abaa1;color:rgb(0, 0, 0); text-align:center;">
+            </div>
+        </form>
+        
     </div>
 </div>
-</div></div>
 {% endblock content %}

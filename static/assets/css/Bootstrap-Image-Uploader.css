@@ -1,6 +1,6 @@
 .bootstrap_img_upload {
   min-height: 100vh;
-  background-color: #757f9a;
+  background-color: #292c2f;
 }
 
 #upload {
@@ -37,4 +37,3 @@
   z-index: 2;
   position: relative;
 }
-

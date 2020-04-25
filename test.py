@@ -1,21 +1,151 @@
+from flask import Flask, redirect, jsonify, request, send_file, url_for, render_template
+from utils.utils import *
 from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
 import numpy as np
+import zipfile
+import hashlib
+import shutil
+import sys
+import os
 
-im = 'static/data/recognized_faces/group-photo-ideas_1024x1024.jpg'
+# Some Hardcoded Values
+ROOT_DATA_DIR = 'static/data'
+CROPPED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'cropped_faces')
+RECOGNIZED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'recognized_faces')
 
-image = Image.open(im).convert('RGB')
+# Flask Config
+app = Flask(__name__)
+app.config['DEBUG'] = True
+"/static/data/cropped_faces/15dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/25dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/35dae1c1312045f46dcf54df9c9bb00f1.jpg",
+"/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
 
-draw = ImageDraw.Draw(image)
+content = [
+    {
+        'id': 0,
+        'image': "/static/data/cropped_faces/05dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 1,
+        'image': "/static/data/cropped_faces/25dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 2,
+        'image': "/static/data/cropped_faces/35dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 3,
+        'image': "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    },
+    {
+        'id': 4,
+        'image': "/static/data/cropped_faces/45dae1c1312045f46dcf54df9c9bb00f1.jpg"
+    }
+]
 
 
-w, h = image.size
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    if request.method == 'GET':
+        return render_template('home.html')
 
-font_size = int(np.mean([w, h]) * 0.04)
-print(font_size)
+    return redirect(url_for('upload_faces'))
 
-font = ImageFont.truetype(
-    "static/assets/fonts/Roboto-Regular.ttf", font_size)
 
-draw.text((100, 100), "Animikh Aich", fill='red', font=font)
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html', title="About")
 
-image.show()
+
+@app.route('/contact', methods=['GET'])
+def contact():
+    return render_template('contact.html', title="Contact")
+
+
+@app.route('/upload_faces', methods=['GET', 'POST'])
+def upload_faces():
+    # Display Page
+    if request.method == 'GET':
+        return render_template('upload_faces.html', title="Upload")
+
+    # Delete Existing Images
+    try:
+        shutil.rmtree(CROPPED_FACES_DIR)
+    except:
+        pass
+
+    # Making sure Folder exists
+    if not os.path.isdir(CROPPED_FACES_DIR):
+        os.makedirs(CROPPED_FACES_DIR)
+
+    # Get uploaded files
+    uploaded_files = request.files.getlist("file")
+    face_num = 0
+
+    faces_list = [uploaded_file.filename for uploaded_file in uploaded_files]
+    return jsonify(faces_list)
+
+
+@app.route('/label_faces', methods=['POST', 'GET'])
+def label_faces():
+    # Display Page
+    if request.method == 'GET':
+        return render_template('label_faces.html', title="Label", table_contents=content)
+
+    face_list = list()
+    label_list = list()
+    for element in content:
+        face_id = element.get('id')
+        image_path = element.get('image')
+        label = request.form.get(f"face-name-{face_id}")
+        print(face_id, image_path, label)
+
+        if not label:
+            continue
+
+        # image = Image.open(image_path[1:]).convert('RGB')
+
+        # Create the List to pass to FR Module
+        face_list.append(image_path)
+        label_list.append(label)
+
+    return jsonify([face_list, label_list])
+
+
+@app.route('/upload_pictures', methods=['POST', 'GET'])
+def upload_pictures():
+
+    # Display Page
+    if request.method == 'GET':
+        return render_template('upload_pictures.html', title="Upload")
+
+    # Delete Existing Images
+    try:
+        shutil.rmtree(RECOGNIZED_FACES_DIR)
+    except:
+        pass
+
+    # Making sure Folder exists
+    if not os.path.isdir(RECOGNIZED_FACES_DIR):
+        os.makedirs(RECOGNIZED_FACES_DIR)
+
+    # Get uploaded files
+    uploaded_files = request.files.getlist("file")
+
+    # Detect Faces for each Uploaded Image
+    recognized_image_list = [
+        uploaded_file.filename for uploaded_file in uploaded_files]
+
+    return jsonify(recognized_image_list)
+
+
+if __name__ == '__main__':
+    app.run(
+        host='0.0.0.0',
+        port='5000',
+        use_reloader=True,
+        threaded=True
+    )
