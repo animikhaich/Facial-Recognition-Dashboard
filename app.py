@@ -1,8 +1,10 @@
 from flask import Flask, redirect, jsonify, request, send_file, url_for, render_template
+from keras.backend.tensorflow_backend import set_session
 from utils.mtcnn import MTCNN
 from utils.utils import *
 from utils.vgg_face import VGGFaceRecognizer
 from PIL import Image, ImageDraw, ImageFont
+import tensorflow as tf
 from datetime import datetime
 import numpy as np
 import zipfile
@@ -10,22 +12,29 @@ import hashlib
 import shutil
 import sys
 import os
+import time
 
 # Configure Environment for GPU
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
+sess = tf.Session()
+graph = tf.get_default_graph()
+set_session(sess)
+
 # Some Hardcoded Values
 ROOT_DATA_DIR = 'static/data'
 CROPPED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'cropped_faces')
 RECOGNIZED_FACES_DIR = os.path.join(ROOT_DATA_DIR, 'recognized_faces')
-name_face_map = dict()
 mtcnn = MTCNN()
 face_recognizer = VGGFaceRecognizer(model='senet50')
 
 # Flask Config
 app = Flask(__name__)
 app.config['DEBUG'] = True
+
+# In App Variables
+content = list()
 
 
 @app.route('/', methods=['GET'])
@@ -41,6 +50,7 @@ def about():
 
 @app.route('/upload_faces', methods=['POST', 'GET'])
 def upload_faces():
+    global content, graph
     # Display Page
     if request.method == 'GET':
         return render_template('upload_faces.html')
@@ -56,18 +66,20 @@ def upload_faces():
         os.makedirs(CROPPED_FACES_DIR)
 
     # Get uploaded files
-    uploaded_files = request.files.getlist("files")
+    uploaded_files = request.files.getlist("file")
 
-    face_num = 0
+    face_id = 0
 
     # Detect Faces for each Uploaded Image
-    faces_list = list()
+    content = list()
     for uploaded_file in uploaded_files:
         image = Image.open(uploaded_file).convert('RGB')
         image = np.asarray(image)
 
         # Detect Faces using MTCNN
-        detected_faces = mtcnn.detect_faces(image)
+        with graph.as_default():
+            set_session(sess)
+            detected_faces = mtcnn.detect_faces(image)
 
         height, width, _ = image.shape
         for detected_face in detected_faces:
@@ -81,47 +93,59 @@ def upload_faces():
                 continue
             saved_image_path = os.path.join(
                 CROPPED_FACES_DIR,
-                str(face_num) + uploaded_file.filename
+                rem_punctuation(f"{face_id}_{uploaded_file.filename}")
             )
             cropped_face.save(saved_image_path)
-            faces_list.append('/' + saved_image_path)
-            face_num += 1
+            content.append(
+                {
+                    'id': face_id,
+                    'image': f"/{saved_image_path}"
+                }
+            )
+            face_id += 1
 
-    return jsonify(faces_list)
+    return redirect(url_for('label_faces'))
 
 
 @app.route('/label_faces', methods=['POST', 'GET'])
 def label_faces():
-    global name_face_map
+    global content, graph
 
     # Display Page
     if request.method == 'GET':
-        return render_template('label_faces.html')
-
-    # Get Form Data
-    name_face_map = request.json
+        return render_template('label_faces.html', title="Label", table_contents=content)
 
     face_list = list()
     label_list = list()
-    for image_path, label in name_face_map.items():
-        image = Image.open(image_path[1:]).convert('RGB')
+    for element in content:
+        face_id = element.get('id')
+        image_path = element.get('image')
+        label = request.form.get(f"face-name-{face_id}")
+        print(face_id, image_path, label)
+
+        if not label:
+            continue
 
         # Create the List to pass to FR Module
+        image = Image.open(image_path[1:]).convert('RGB')
         face_list.append(image)
         label_list.append(label)
 
     # Register Faces - Extract and store ground truth Facial Features
-    face_recognizer.register_faces(face_list, label_list)
+    with graph.as_default():
+        set_session(sess)
+        face_recognizer.register_faces(face_list, label_list)
 
-    return url_for('upload_pictures')
+    return redirect(url_for('upload_pictures'))
 
 
 @app.route('/upload_pictures', methods=['POST', 'GET'])
 def upload_pictures():
+    global graph
 
     # Display Page
     if request.method == 'GET':
-        return render_template('upload_pictures.html')
+        return render_template('upload_pictures.html', title="Upload")
 
     # Delete Existing Images
     try:
@@ -134,7 +158,7 @@ def upload_pictures():
         os.makedirs(RECOGNIZED_FACES_DIR)
 
     # Get uploaded files
-    uploaded_files = request.files.getlist("files")
+    uploaded_files = request.files.getlist("file")
 
     # Detect Faces for each Uploaded Image
     recognized_image_list = list()
@@ -143,11 +167,15 @@ def upload_pictures():
         image = np.asarray(image_PIL)
 
         # Detect Faces using MTCNN
-        detected_faces = mtcnn.detect_faces(image)
+        with graph.as_default():
+            set_session(sess)
+            detected_faces = mtcnn.detect_faces(image)
 
         height, width, _ = image.shape
+        font_size = int(np.mean([width, height]) * 0.03)
 
         # TODO: From here down
+        draw = ImageDraw.Draw(image_PIL)
         for detected_face in detected_faces:
             x1, y1, x2, y2 = fix_coordinates(
                 detected_face['box'], width, height
@@ -158,26 +186,44 @@ def upload_pictures():
             except:
                 continue
 
-            face_name = face_recognizer.recognize(cropped_face, thresh=0.25)
+            with graph.as_default():
+                set_session(sess)
+                face_name = face_recognizer.recognize(
+                    cropped_face, thresh=0.25)
             if face_name:
-                draw = ImageDraw.Draw(image_PIL)
                 draw.rectangle((x1, y1, x2, y2))
-                text_w, text_h = draw.textsize(face_name)
-                text_x = int(x1 + (x2 - x1) / 2 - text_w / 2)
-                text_y = int(y2 + 0.1 * (y2 - y1))
-                draw.text((text_x, text_y), face_name, fill='red')
+                font = ImageFont.truetype(
+                    "static/assets/fonts/Roboto-Regular.ttf", font_size)
 
-        image_path = os.path.join(RECOGNIZED_FACES_DIR, uploaded_file.filename)
+                text_w, text_h = draw.textsize(face_name)
+                text_x = int(x1)
+                text_y = int(y1 - font_size)
+                draw.text((text_x, text_y), face_name, fill='red', font=font)
+
+        image_path = os.path.join(
+            RECOGNIZED_FACES_DIR, rem_punctuation(
+                f"{time.time()}_{uploaded_file.filename}")
+        )
         image_PIL.save(image_path)
         recognized_image_list.append('/'+image_path)
 
-    return jsonify(recognized_image_list)
+    return redirect(url_for('display_results'))
+
+
+@app.route('/display_results', methods=['GET'])
+def display_results():
+    # Get List of images in Recognized Faces Directory
+    images = os.listdir(RECOGNIZED_FACES_DIR)
+    image_paths = ['/'+os.path.join(RECOGNIZED_FACES_DIR, im_path).replace(' ', '%20')
+                   for im_path in images]
+
+    return render_template('display_results.html', image_paths=image_paths)
 
 
 if __name__ == '__main__':
     app.run(
-        host='localhost',
+        host='0.0.0.0',
         port='5000',
-        use_reloader=False,
-        threaded=False
+        use_reloader=True,
+        threaded=True
     )

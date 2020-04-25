@@ -166,7 +166,7 @@ class VGGFaceRecognizer:
         query_features = self.feature_extractor(face)
         temp_sim_dict = dict()
 
-        # Compare the Query Face features with the existing databse faces
+        # Compare the Query Face features with the existing database faces
         for key in self.face_dict.keys():
             db_face_features = self.face_dict[key]
             score = self.calculate_similarity(
@@ -174,8 +174,11 @@ class VGGFaceRecognizer:
             )
             temp_sim_dict[key] = score
 
-        # Return None if no face matches
-        if min(temp_sim_dict.values()) > thresh:
+        try:
+            # Return None if no face matches
+            if min(temp_sim_dict.values()) > thresh:
+                return None
+        except:
             return None
 
         # Find most similar face

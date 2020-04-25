@@ -23,10 +23,10 @@
                             {{ content.id }}
                         </td>
                         <td style="color: white; vertical-align:middle" scope="row">
-                            <img src={{ content.image }} class="img-thumbnail" alt="Unknown Face">
+                            <img src={{ content.image }} class="img-thumbnail" alt="Unknown Face" style="height: 100px; object-fit:cover">
                         </td>
                         <td style="color: white; vertical-align:middle">
-                            <input type="text" class="form-control" id={{ content.id }} name="face-name-{{ content.id }}" placeholder="Name (can be blank)">
+                            <input type="text" class="form-control" id={{ content.id }} name="face-name-{{ content.id }}" placeholder="Name (Skipped if left blank)">
                         </td>
                     </tr>
                     {% endfor %}

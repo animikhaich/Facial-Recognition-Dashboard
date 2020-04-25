@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <title>
         {% if title %}
             Dashboard - {{ title }}
@@ -27,7 +30,7 @@
 
 <body>
     <!-- NAV BAR -->
-    <nav class="navbar navbar-dark navbar-expand-md" id="app-navbar">
+    <nav class="navbar navbar-dark navbar-expand-md" id="app-navbar" style="z-index: 999999;">
         <div class="container-fluid"><img src="/static/assets/img/facial-recognition.png" width="50"><a class="navbar-brand" href="#"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div
                 class="collapse navbar-collapse" id="navcol-1"><span class="text-monospace text-dark navbar-text"><strong>Facial Recognition</strong></span>

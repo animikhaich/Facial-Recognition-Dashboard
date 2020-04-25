@@ -9,14 +9,14 @@
   margin-bottom: 0;
 }
 
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .navigation-clean {
     padding-top: 0;
     padding-bottom: 0;
   }
 }
 
-@media (max-width:767px) {
+@media (max-width: 767px) {
   .navigation-clean .navbar-header {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -48,7 +48,8 @@
   border-color: #ddd;
 }
 
-.navigation-clean .navbar-toggle:hover, .navigation-clean .navbar-toggle:focus {
+.navigation-clean .navbar-toggle:hover,
+.navigation-clean .navbar-toggle:focus {
   background: none;
 }
 
@@ -64,11 +65,13 @@
   background-color: #eee;
 }
 
-.navigation-clean .navbar-collapse, .navigation-clean .navbar-form {
+.navigation-clean .navbar-collapse,
+.navigation-clean .navbar-form {
   border-top-color: #ddd;
 }
 
-.navigation-clean.navbar-inverse .navbar-collapse, .navigation-clean.navbar-inverse .navbar-form {
+.navigation-clean.navbar-inverse .navbar-collapse,
+.navigation-clean.navbar-inverse .navbar-form {
   border-top-color: #333;
 }
 
@@ -81,7 +84,8 @@
   color: #465765;
 }
 
-.navigation-clean.navbar-default .navbar-nav > li > a:focus, .navigation-clean.navbar-default .navbar-nav > li > a:hover {
+.navigation-clean.navbar-default .navbar-nav > li > a:focus,
+.navigation-clean.navbar-default .navbar-nav > li > a:hover {
   color: #37434d !important;
   background-color: transparent;
 }
@@ -96,12 +100,14 @@
   font-weight: bold;
 }
 
-.navigation-clean.navbar-inverse .navbar-nav > li > a:focus, .navigation-clean.navbar-inverse .navbar-nav > li > a:hover {
+.navigation-clean.navbar-inverse .navbar-nav > li > a:focus,
+.navigation-clean.navbar-inverse .navbar-nav > li > a:hover {
   color: #fe0707 !important;
   background-color: transparent;
 }
 
-.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav > li > a {
   font-weight: bold;
   text-transform: uppercase;
 }
@@ -110,7 +116,8 @@ a {
   color: #6d8de1;
 }
 
-#footer a:active, a:hover {
+#footer a:active,
+a:hover {
   color: #fcf8f8;
   text-decoration: none;
   font-weight: bold;
@@ -121,26 +128,37 @@ a {
   -webkit-text-decoration-skip: objects;
 }
 
-a:active, a:hover {
+a:active,
+a:hover {
   outline: 0;
 }
 
-.uk-link, a {
+.uk-link,
+a {
   color: #1e87f0;
   text-decoration: none;
   cursor: pointer;
 }
 
-.uk-link:hover, a:hover {
+.uk-link:hover,
+a:hover {
   color: #0f6ecd;
   text-decoration: underline;
 }
 
-audio, canvas, iframe, img, svg, video {
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
   vertical-align: middle;
 }
 
-audio, canvas, img, video {
+audio,
+canvas,
+img,
+video {
   max-width: 100%;
   height: auto;
   box-sizing: border-box;
@@ -150,19 +168,44 @@ img {
   border-style: none;
 }
 
-address, dl, fieldset, figure, ol, p, pre, ul {
+address,
+dl,
+fieldset,
+figure,
+ol,
+p,
+pre,
+ul {
   margin: 0 0 20px 0;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 30px;
 }
 
-article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+nav,
+section,
+summary {
   display: block;
 }
 
-a, area, button, input, label, select, summary, textarea {
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea {
   touch-action: manipulation;
 }
 
@@ -188,7 +231,10 @@ img {
   padding: 0;
 }
 
-.navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link {
+.navbar-dark .navbar-nav .active > .nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show > .nav-link {
   font-size: larger;
 }
 
@@ -205,7 +251,7 @@ img {
 }
 
 .text-center {
-  font-size: 4.0rem;
+  font-size: 4rem;
 }
 
 p {
@@ -232,7 +278,8 @@ p {
   text-align: center;
 }
 
-.h3 .companylogo, h3 {
+.h3 .companylogo,
+h3 {
   padding-top: 20px;
   text-align: left;
   font-size: 2rem;
@@ -242,7 +289,10 @@ p {
   font-size: 5rem;
 }
 
-[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
+button:not(:disabled) {
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -261,4 +311,3 @@ div {
   height: 100%;
   flex-grow: 1;
 }
-
