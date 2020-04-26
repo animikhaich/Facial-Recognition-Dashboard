@@ -174,7 +174,7 @@ Live Dashboard: [Facial Recognition dashboard](http://ec2-52-66-232-128.ap-south
 [issues-shield]: https://img.shields.io/github/issues/animikhaich/Facial-Recognition-Dashboard.svg?style=flat-square
 [issues-url]: https://github.com/animikhaich/Facial-Recognition-Dashboard/issues
 [license-shield]: https://img.shields.io/github/license/animikhaich/Facial-Recognition-Dashboard.svg?style=flat-square
-[license-url]: https://github.com/animikhaich/Facial-Recognition-Dashboard/blob/master/LICENSE.txt
+[license-url]: https://github.com/animikhaich/Facial-Recognition-Dashboard/blob/master/LICENSE.md
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/animikh-aich/
 [product-screenshot]: readme-assets/project-page.png
