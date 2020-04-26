@@ -1,3 +1,4 @@
+[![Release Version][release-shield]][release-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -162,6 +163,8 @@ Live Dashboard: [Facial Recognition dashboard](http://ec2-52-66-232-128.ap-south
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[release-shield]: https://img.shields.io/github/release/animikhaich/Facial-Recognition-Dashboard.svg?style=flat-square
+[release-url]: https://github.com/animikhaich/Facial-Recognition-Dashboard/releases
 [contributors-shield]: https://img.shields.io/github/contributors/animikhaich/Facial-Recognition-Dashboard.svg?style=flat-square
 [contributors-url]: https://github.com/animikhaich/Facial-Recognition-Dashboard/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/animikhaich/Facial-Recognition-Dashboard.svg?style=flat-square
