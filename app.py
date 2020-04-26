@@ -88,6 +88,7 @@ def upload_faces():
         with graph.as_default():
             set_session(sess)
             detected_faces = mtcnn.detect_faces(image)
+            print(detected_faces)
 
         height, width, _ = image.shape
         for detected_face in detected_faces:
@@ -197,9 +198,9 @@ def upload_pictures():
             with graph.as_default():
                 set_session(sess)
                 face_name = face_recognizer.recognize(
-                    cropped_face, thresh=0.25)
+                    cropped_face, thresh=0.30)
             if face_name:
-                draw.rectangle((x1, y1, x2, y2))
+                draw.rectangle((x1, y1, x2, y2), width=5)
                 font = ImageFont.truetype(
                     "static/assets/fonts/Roboto-Regular.ttf", font_size)
 
