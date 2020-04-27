@@ -83,6 +83,7 @@ def upload_faces():
     for uploaded_file in uploaded_files:
         image = Image.open(uploaded_file).convert('RGB')
         image = np.asarray(image)
+        image = image[:, :, ::-1]  # Convert RGB to BGR
 
         # Detect Faces using MTCNN
         with graph.as_default():
@@ -174,6 +175,7 @@ def upload_pictures():
     for uploaded_file in uploaded_files:
         image_PIL = Image.open(uploaded_file).convert('RGB')
         image = np.asarray(image_PIL)
+        image = image[:, :, ::-1]  # Convert RGB to BGR
 
         # Detect Faces using MTCNN
         with graph.as_default():
@@ -183,7 +185,6 @@ def upload_pictures():
         height, width, _ = image.shape
         font_size = int(np.mean([width, height]) * 0.03)
 
-        # TODO: From here down
         draw = ImageDraw.Draw(image_PIL)
         for detected_face in detected_faces:
             x1, y1, x2, y2 = fix_coordinates(

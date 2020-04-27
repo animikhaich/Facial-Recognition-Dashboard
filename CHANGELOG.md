@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Information to be added
+- Bugfix: Converted PIL image to BGR at each stage for better detection
+- Readme Update
 
 ## Version 0.1.0 - 2020-04-27
 
