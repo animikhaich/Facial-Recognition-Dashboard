@@ -31,6 +31,8 @@
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/21188d8d298347848c597341597e98a3)](https://app.codacy.com/manual/animikhaich/Facial-Recognition-Dashboard?utm_source=github.com&utm_medium=referral&utm_content=animikhaich/Facial-Recognition-Dashboard&utm_campaign=Badge_Grade_Dashboard)
+
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
   - [Built With](#built-with)
