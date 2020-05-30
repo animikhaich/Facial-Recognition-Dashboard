@@ -17,8 +17,6 @@
   <p align="center">
     A Weekend Project showing off Facial Recognition
     <br />
-    <a href="http://ec2-52-66-232-128.ap-south-1.compute.amazonaws.com:5000/">View Demo</a>
-    ·
     <a href="https://github.com/animikhaich/Facial-Recognition-Dashboard/issues/new">Report Bug</a>
     ·
     <a href="https://github.com/animikhaich/Facial-Recognition-Dashboard/issues/new">Request Feature</a>
@@ -154,8 +152,6 @@ Distributed under the MIT License. See [LICENSE](LICENSE.md) for more informatio
 - LinkedIn: [Animikh Aich](https://www.linkedin.com/in/animikh-aich/)
 - Email: [animikhaich@gmail.com](mailto:animikhaich@gmail.com)
 - Twitter: [@AichAnimikh](https://twitter.com/AichAnimikh)
-
-Live Dashboard: [Facial Recognition dashboard](http://ec2-52-66-232-128.ap-south-1.compute.amazonaws.com:5000/)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
