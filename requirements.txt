@@ -2,7 +2,7 @@ numpy==1.17.0
 Keras==2.3.1
 scipy==1.4.1
 Flask==1.1.1
-tensorflow==1.14.0
+tensorflow==2.5.0
 Pillow==7.1.1
 git+https://github.com/animikhaich/keras-vggface.git
 git+https://github.com/animikhaich/mtcnn.git
